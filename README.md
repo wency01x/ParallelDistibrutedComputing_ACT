@@ -1,6 +1,6 @@
 # ParallelDistibrutedComputing_ACT
 # CS3B
-Members:
+Members:  
         Babuyo Harvie Lorenz  
         Casino Wency  
         Fabria Kerby  
