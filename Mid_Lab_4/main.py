@@ -17,3 +17,4 @@ def run_sequential():
     for name, scores in candidates_data.items():
         results.append(calculate_score(name, scores))
     return time.time() - start_time
+
