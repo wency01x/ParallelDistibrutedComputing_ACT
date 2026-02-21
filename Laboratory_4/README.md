@@ -58,10 +58,10 @@ When you run the script, you should expect an output similar to this:
 Running Sequential Tabulation (please wait ~5 seconds)...
 Running Parallel Tabulation (please wait ~1 second)...
 
---- BENCHMARK REPORT ---
-Sequential Time: 5.06 seconds
-Parallel Time:   1.02 seconds
-Speedup Ratio:   4.96
+--- BENCHMARK REPORT ---  
+Sequential Time: 5.06 seconds  
+Parallel Time:   1.02 seconds  
+Speedup Ratio:   4.96  
 
 **Note:** Exact execution times and speedup ratios will vary slightly depending on the CPU load and hardware of the machine running the script.
 
@@ -77,3 +77,4 @@ To meet the individual contribution requirements, the code was divided into thre
 | 1 | *Wency* | Implemented data setup and sequential processing logic — setup of candidate data and the run_sequential function |
 | 2 | *Kerby* | Created thread pool for parallel data execution — implementation of the run_parallel function using ThreadPoolExecutor |
 | 3 | *Harvie* | Added benchmarking logic and speedup calculation — execution block, timing, and formatting the console report |
+
