@@ -18,3 +18,26 @@ def run_sequential():
         results.append(calculate_score(name, scores))
     return time.time() - start_time
 
+def run_parallel():
+    start_time = time.time()
+    results = []
+    with ThreadPoolExecutor(max_workers=5) as executor:
+        # Distributing the work units concurrently
+        futures = [executor.submit(calculate_score, name, scores) for name, scores in candidates_data.items()]
+        for future in futures:
+            results.append(future.result())
+    return time.time() - start_time
+
+if __name__ == "__main__":
+    print("Running Sequential Tabulation...")
+    time_seq = run_sequential()
+    
+    print("Running Parallel Tabulation...")
+    time_par = run_parallel()
+    
+    speedup = time_seq / time_par
+    
+    print("\n--- BENCHMARK REPORT ---")
+    print(f"Sequential Time: {time_seq:.2f} seconds")
+    print(f"Parallel Time:   {time_par:.2f} seconds")
+    print(f"Speedup Ratio:   {speedup:.2f}")
