@@ -18,7 +18,7 @@ jobs:
 
       - name: Count commits per contributor
         run: |
-          WENCY=$(git log --oneline --author="wency01x" | wc -l | tr -d ' ')
+          WENCY=$(git log --oneline --author="Wency\|wency\|samsepiol\|cy" | wc -l | tr -d ' ')
           HARVIE=$(git log --oneline --author="hlcbabuyo" | wc -l | tr -d ' ')
           KERBY=$(git log --oneline --author="lazhttp" | wc -l | tr -d ' ')
 
