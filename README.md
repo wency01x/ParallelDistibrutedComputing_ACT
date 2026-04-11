@@ -16,7 +16,7 @@
       <a href="https://github.com/wency01x">
         <img src="https://img.shields.io/badge/GitHub-wency01x-181717?style=flat&logo=github&logoColor=white" alt="GitHub"/>
       </a><br/>
-      <img src="https://img.shields.io/badge/wency--commits-1-blue?style=flat&label=Commits" alt="Wency Commits"/>
+      <img src="https://img.shields.io/badge/wency--commits-23-blue?style=flat&label=Commits" alt="Wency Commits"/>
     </td>
     <td align="center">
       <img src="https://placehold.co/150x150/1a1a2e/ffffff?text=HB" width="120px" height="120px" style="border-radius: 12px;" alt="Harvie Babuyo"/><br />
