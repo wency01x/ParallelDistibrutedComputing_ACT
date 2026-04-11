@@ -1,0 +1,39 @@
+name: Update Commit Counts
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  update-commits:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Count commits per contributor
+        run: |
+          WENCY=$(git log --oneline --author="wency01x" | wc -l | tr -d ' ')
+          HARVIE=$(git log --oneline --author="hlcbabuyo" | wc -l | tr -d ' ')
+          KERBY=$(git log --oneline --author="lazhttp" | wc -l | tr -d ' ')
+
+          echo "WENCY=$WENCY" >> $GITHUB_ENV
+          echo "HARVIE=$HARVIE" >> $GITHUB_ENV
+          echo "KERBY=$KERBY" >> $GITHUB_ENV
+
+      - name: Update README badges
+        run: |
+          sed -i "s|wency--commits-[0-9]*-blue|wency--commits-${{ env.WENCY }}-blue|g" README.md
+          sed -i "s|harvie--commits-[0-9]*-blue|harvie--commits-${{ env.HARVIE }}-blue|g" README.md
+          sed -i "s|kerby--commits-[0-9]*-blue|kerby--commits-${{ env.KERBY }}-blue|g" README.md
+
+      - name: Commit updated README
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git diff --quiet || (git add README.md && git commit -m "chore: update commit counts [skip ci]" && git push)
