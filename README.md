@@ -11,7 +11,7 @@
 <table>
   <tr>
     <td align="center">
-      <img src="https://placehold.co/150x150/1a1a2e/ffffff?text=WGC" width="120px" height="120px" style="border-radius: 12px;" alt="Wency Gellica Casino"/><br />
+      <img src="assets/images/wency.jpg width="120px" height="120px" style="border-radius: 12px;" alt="Wency Gellica Casino"/><br />
       <strong>Wency Gellica Casino</strong><br />
       <a href="https://github.com/wency01x">
         <img src="https://img.shields.io/badge/GitHub-wency01x-181717?style=flat&logo=github&logoColor=white" alt="GitHub"/>
@@ -19,7 +19,7 @@
       <img src="https://img.shields.io/badge/wency--commits-23-blue?style=flat&label=Commits" alt="Wency Commits"/>
     </td>
     <td align="center">
-      <img src="https://placehold.co/150x150/1a1a2e/ffffff?text=HB" width="120px" height="120px" style="border-radius: 12px;" alt="Harvie Babuyo"/><br />
+      <img src="assets/images/harvie.jpg" width="120px" height="120px" style="border-radius: 12px;" alt="Harvie Babuyo"/><br />
       <strong>Harvie Babuyo</strong><br />
       <a href="https://github.com/hlcbabuyo">
         <img src="https://img.shields.io/badge/GitHub-hlcbabuyo-181717?style=flat&logo=github&logoColor=white" alt="GitHub"/>
@@ -29,8 +29,8 @@
     <td align="center">
       <img src="https://placehold.co/150x150/1a1a2e/ffffff?text=KF" width="120px" height="120px" style="border-radius: 12px;" alt="Kerby Fabria"/><br />
       <strong>Kerby Fabria</strong><br />
-      <a href="https://github.com/KERBY_GITHUB_USERNAME">
-        <img src="https://img.shields.io/badge/GitHub-KERBY__USERNAME-181717?style=flat&logo=github&logoColor=white" alt="GitHub"/>
+      <a href="https://github.com/lazhttp">
+        <img src="assets/images/kerby.jpg" alt="GitHub"/>
       </a><br/>
       <img src="https://img.shields.io/badge/kerby--commits-3-blue?style=flat&label=Commits" alt="Kerby Commits"/>
     </td>
