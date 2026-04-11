@@ -1,4 +1,4 @@
-# 🏫 University of Science and Technology of Southern Philippines
+# University of Science and Technology of Southern Philippines
 
 ---
 
@@ -42,5 +42,5 @@
 ---
 
 <div align="center">
-  <sub>Made with ❤️ by TEAM BACASFAB · USTP</sub>
+  <sub> TEAM BACASFAB · USTP</sub>
 </div>
