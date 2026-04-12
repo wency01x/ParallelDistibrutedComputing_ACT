@@ -42,5 +42,5 @@
 ---
 
 <div align="center">
-  <sub> TEAM BACASFAB · Fsociety</sub>
+  <sub> Fsociety</sub>
 </div>
