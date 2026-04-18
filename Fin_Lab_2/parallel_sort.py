@@ -31,3 +31,19 @@ def merge_sorted_halves(sorted_lists: list[list[int]]) -> list[int]:
                 merged.append(sorted_lists[i])
         sorted_lists = merged
     return sorted_lists[0]
+
+def parallel_sort(data: list[int], num_processes: int = 4) -> list[int]:
+    """
+    Parallel Merge Sort using Python's multiprocessing.Pool.
+
+    Steps:
+      1. Partition data into `num_processes` roughly equal chunks.
+      2. Dispatch each chunk to a worker process via Pool.map().
+      3. Collect the sorted chunks from all workers.
+      4. Merge all sorted chunks into one globally sorted result.
+
+    Note: Pool.map() blocks until ALL worker processes finish, then
+    returns results in the same order as the input iterable.
+    """
+    if len(data) == 0:
+        return []
