@@ -63,3 +63,17 @@ def parallel_sort(data: list[int], num_processes: int = 4) -> list[int]:
 
     # ── Step 4: Merge sorted chunks ───────────────────────────────────────
     return merge_sorted_halves(sorted_chunks)
+    
+if __name__ == "__main__":
+    import random
+    import time
+
+    sample = [random.randint(1, 1_000_000) for _ in range(10_000)]
+    start  = time.time()
+    result = parallel_sort(sample, num_processes=4)
+    elapsed = time.time() - start
+
+    print(f"Parallel Merge Sort — 10,000 elements | 4 processes")
+    print(f"  First 10 sorted: {result[:10]}")
+    print(f"  Elapsed time:    {elapsed:.4f}s")
+    print(f"  Correctly sorted: {result == sorted(sample)}")
