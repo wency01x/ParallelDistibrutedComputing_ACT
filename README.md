@@ -16,7 +16,7 @@
       <a href="https://github.com/wency01x">
         <img src="https://img.shields.io/badge/GitHub-wency01x-181717?style=flat&logo=github&logoColor=white" alt="GitHub"/>
       </a><br/>
-      <img src="https://img.shields.io/badge/wency--commits-28-blue?style=flat&label=Commits" alt="Wency Commits"/>
+      <img src="https://img.shields.io/badge/wency--commits-29-blue?style=flat&label=Commits" alt="Wency Commits"/>
     </td>
     <td align="center">
       <img src="assets/images/harvie.jpg" width="120px" height="120px" style="border-radius: 12px;" alt="Harvie Babuyo"/><br />
@@ -24,7 +24,7 @@
       <a href="https://github.com/hlcbabuyo">
         <img src="https://img.shields.io/badge/GitHub-hlcbabuyo-181717?style=flat&logo=github&logoColor=white" alt="GitHub"/>
       </a><br/>
-      <img src="https://img.shields.io/badge/harvie--commits-18-blue?style=flat&label=Commits" alt="Harvie Commits"/>
+      <img src="https://img.shields.io/badge/harvie--commits-19-blue?style=flat&label=Commits" alt="Harvie Commits"/>
     </td>
     <td align="center">
       <img src="assets/images/kerby.jpg" width="120px" height="120px" style="border-radius: 12px;" alt="Kerby Fabria"/><br />
