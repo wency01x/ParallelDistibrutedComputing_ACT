@@ -48,3 +48,36 @@ def parallel_search(data: list[int], target: int, num_processes: int = 4) -> int
     """
     if len(data) == 0:
         return -1
+
+    # ── Step 1: Partition with offsets ────────────────────────────────────
+    chunk_size = len(data) // num_processes
+    chunks: list[tuple[list[int], int]] = []
+
+    for i in range(0, len(data), chunk_size):
+        chunk  = data[i : i + chunk_size]
+        offset = i
+        chunks.append((chunk, offset))
+
+    # ── Step 2: Spawn worker processes ────────────────────────────────────
+    q         = Queue()
+    processes = []
+
+    for chunk, offset in chunks:
+        p = Process(target=worker, args=(chunk, target, q, offset))
+        processes.append(p)
+        p.start()
+
+    # ── Step 3: Collect results ───────────────────────────────────────────
+    results = []
+    for _ in processes:
+        results.append(q.get())   # blocks until each worker puts a result
+
+    # Wait for all processes to fully terminate
+    for p in processes:
+        p.join()
+
+    # ── Step 4: Resolve final answer ──────────────────────────────────────
+    valid_indices = [r for r in results if r != -1]
+    if not valid_indices:
+        return -1                          # not found in any chunk
+    return min(valid_indices)             # earliest occurrence in original list
