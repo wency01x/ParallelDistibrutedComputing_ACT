@@ -24,7 +24,7 @@
       <a href="https://github.com/hlcbabuyo">
         <img src="https://img.shields.io/badge/GitHub-hlcbabuyo-181717?style=flat&logo=github&logoColor=white" alt="GitHub"/>
       </a><br/>
-      <img src="https://img.shields.io/badge/harvie--commits-20-blue?style=flat&label=Commits" alt="Harvie Commits"/>
+      <img src="https://img.shields.io/badge/harvie--commits-21-blue?style=flat&label=Commits" alt="Harvie Commits"/>
     </td>
     <td align="center">
       <img src="assets/images/kerby.jpg" width="120px" height="120px" style="border-radius: 12px;" alt="Kerby Fabria"/><br />
