@@ -47,3 +47,19 @@ def parallel_sort(data: list[int], num_processes: int = 4) -> list[int]:
     """
     if len(data) == 0:
         return []
+
+    # ── Step 1: Partition ──────────────────────────────────────────────────
+    chunk_size = len(data) // num_processes
+    chunks = [
+        data[i : i + chunk_size]
+        for i in range(0, len(data), chunk_size)
+    ]
+    # If the division left a remainder, the last slice absorbs it automatically
+    # because Python slicing never goes out of bounds.
+
+    # ── Step 2 & 3: Sort chunks in parallel ───────────────────────────────
+    with Pool(processes=num_processes) as pool:
+        sorted_chunks = pool.map(_sort_chunk, chunks)
+
+    # ── Step 4: Merge sorted chunks ───────────────────────────────────────
+    return merge_sorted_halves(sorted_chunks)
