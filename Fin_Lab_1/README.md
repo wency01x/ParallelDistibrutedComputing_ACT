@@ -10,3 +10,12 @@ Because of our routing loop, the master process simply cycles back to the first 
 
 **3. How did processing delays affect the order completion?**
 By using `time.sleep()` to simulate processing time, the order of task completion became asynchronous. A task assigned later could finish before an earlier task if it was given a shorter randomized sleep delay.
+
+**4. How did you implement shared memory, and where was it initialized?**
+We implemented shared memory using `Manager().list()` from the `multiprocessing` library. It was initialized at the beginning of the `main()` function before the processes diverge, creating a shared structure accessible to the workers.
+
+**5. What issues occurred when multiple workers wrote to shared memory simultaneously?**
+Without synchronization, multiple worker processes attempted to append to the shared list at the exact same time. This caused race conditions, leading to missing data and inconsistent final outputs.
+
+**6. How did you ensure consistent results when using multiple processes?**
+We used `Lock()` from the `multiprocessing` library. By wrapping the append action inside a `with lock:` critical section, we ensured that only one worker process could write to the shared memory list at a time.
