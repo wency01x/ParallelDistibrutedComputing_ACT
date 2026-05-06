@@ -1,4 +1,5 @@
 from mpi4py import MPI
+from multiprocessing import Manager, Lock
 import time
 import random
 import json
@@ -23,6 +24,10 @@ def main():
     rank = comm.Get_rank()
     size = comm.Get_size()
 
+    manager = Manager()
+    shared_data_lake = manager.list()
+    ipc_write_lock = Lock()
+
     if rank == 0:
         node_name = "API-Gateway"
         server_log("INFO", node_name, "Booting Distributed Ingestion Pipeline...")
@@ -38,9 +43,23 @@ def main():
 
         for i in range(1, size):
             comm.send(None, dest=i, tag=100)
+
+        aggregated_logs = []
+        for i in range(1, size):
+            node_results = comm.recv(source=i, tag=200)
+            aggregated_logs.extend(node_results)
+
+        print("\n" + "="*50)
+        print(" 📊 SYSTEM STATE: SHARED MEMORY DATA LAKE")
+        print("="*50)
+        for record in aggregated_logs:
+            print(f" ↳ {record}")
+        print("="*50 + "\n")
+
     else:
         services = {1: "RBIM-Service", 2: "GANAP-Service", 3: "DisasterAPI"}
         node_name = services.get(rank, f"Service-{rank}")
+        local_cache = []
 
         while True:
             raw_packet = comm.recv(source=0, tag=100)
@@ -54,7 +73,14 @@ def main():
             db_latency = random.uniform(0.3, 1.8)
             time.sleep(db_latency)
             
-            server_log("SUCCESS", node_name, f"Processed {task['trace_id']} in {db_latency:.2f}s")
+            processed_state = f"{task['trace_id']} | TYPE: {task['type']} | LATENCY: {db_latency:.2f}s | NODE: {node_name}"
+            
+            with ipc_write_lock:
+                shared_data_lake.append(processed_state)
+                local_cache.append(processed_state)
+                server_log("SUCCESS", node_name, f"Committed {task['trace_id']} to Shared Data Lake.")
+
+        comm.send(local_cache, dest=0, tag=200)
 
 if __name__ == "__main__":
     main()

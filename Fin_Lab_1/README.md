@@ -13,3 +13,9 @@ We used `time.sleep()` to simulate real-world, I/O-bound database latency. Becau
 
 **4. How did you implement shared memory, and where was it initialized?**
 We initialized a centralized Data Lake using `multiprocessing.Manager().list()`. This was declared at the root level of our `main()` function prior to the rank-based process divergence, allowing all downstream parallel processes to access a unified proxy structure.
+
+**5. What issues occurred when multiple workers wrote to shared memory simultaneously?**
+Prior to synchronization, our Microservices attempted concurrent append operations to the Shared Data Lake. Because `append()` in a multiprocessing context is not implicitly thread-safe, this resulted in race conditions, lost transaction records, and corrupted data states within the shared array.
+
+**6. How did you ensure consistent results when using multiple processes?**
+We implemented a Mutex (Mutual Exclusion) technique using `multiprocessing.Lock()`. By wrapping our memory writes inside a `with ipc_write_lock:` critical section, we guaranteed that only one node could alter the Shared Data Lake at any given time, completely resolving the race conditions.
