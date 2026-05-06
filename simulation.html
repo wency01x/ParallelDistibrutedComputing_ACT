@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distributed Pipeline Simulation</title>
+    <style>
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+        #terminal {
+            flex-grow: 1;
+            background: #010409;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 15px;
+            overflow-y: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        .log { margin-bottom: 5px; opacity: 0; transform: translateY(10px); transition: all 0.3s ease; }
+        .log.visible { opacity: 1; transform: translateY(0); }
+        .timestamp { color: #8b949e; }
+        .level-info { color: #58a6ff; font-weight: bold; }
+        .level-debug { color: #8b949e; font-weight: bold; }
+        .level-success { color: #3fb950; font-weight: bold; }
+        .node { color: #d2a8ff; }
+        .message { color: #c9d1d9; }
+        .header {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .header h1 { margin: 0; color: #58a6ff; font-size: 1.5rem; }
+        .header p { margin: 5px 0; color: #8b949e; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>MPI Distributed Pipeline Simulation</h1>
+        <p>Rank size: 4 | Master: API-Gateway | Workers: RBIM, GANAP, DisasterAPI</p>
+    </div>
+    <div id="terminal"></div>
+
+    <script>
+        const logs = [
+            { level: "INFO", node: "API-Gateway", message: "Booting Distributed Ingestion Pipeline..." },
+            { level: "DEBUG", node: "API-Gateway", message: "Routed TXN-881 -> Worker Node 1" },
+            { level: "INFO", node: "RBIM-Service", message: "Ingesting RBIM_SYNC (TXN-881)" },
+            { level: "DEBUG", node: "API-Gateway", message: "Routed TXN-882 -> Worker Node 2" },
+            { level: "INFO", node: "GANAP-Service", message: "Ingesting GANAP_TABULATION (TXN-882)" },
+            { level: "DEBUG", node: "API-Gateway", message: "Routed TXN-883 -> Worker Node 3" },
+            { level: "INFO", node: "DisasterAPI", message: "Ingesting DISASTER_ALERT (TXN-883)" },
+            { level: "DEBUG", node: "API-Gateway", message: "Routed TXN-884 -> Worker Node 1" },
+            { level: "INFO", node: "RBIM-Service", message: "Ingesting CLEARANCE_REQ (TXN-884)" },
+            { level: "SUCCESS", node: "GANAP-Service", message: "Processed TXN-882 in 0.85s" },
+            { level: "DEBUG", node: "API-Gateway", message: "Routed TXN-885 -> Worker Node 2" },
+            { level: "INFO", node: "GANAP-Service", message: "Ingesting GANAP_MEET_ENGINE (TXN-885)" },
+            { level: "SUCCESS", node: "RBIM-Service", message: "Processed TXN-881 in 1.12s" },
+            { level: "DEBUG", node: "API-Gateway", message: "Routed TXN-886 -> Worker Node 3" },
+            { level: "INFO", node: "DisasterAPI", message: "Ingesting RBIM_MIGRANT_LOG (TXN-886)" },
+            { level: "SUCCESS", node: "DisasterAPI", message: "Processed TXN-883 in 1.45s" },
+            { level: "SUCCESS", node: "RBIM-Service", message: "Processed TXN-884 in 0.92s" },
+            { level: "SUCCESS", node: "GANAP-Service", message: "Processed TXN-885 in 1.25s" },
+            { level: "SUCCESS", node: "DisasterAPI", message: "Processed TXN-886 in 1.10s" },
+            { level: "INFO", node: "RBIM-Service", message: "Received termination signal. Spinning down." },
+            { level: "INFO", node: "GANAP-Service", message: "Received termination signal. Spinning down." },
+            { level: "INFO", node: "DisasterAPI", message: "Received termination signal. Spinning down." }
+        ];
+
+        const terminal = document.getElementById('terminal');
+
+        function addLog(log, index) {
+            setTimeout(() => {
+                const now = new Date();
+                const timestamp = now.getHours().toString().padStart(2, '0') + ':' + 
+                                  now.getMinutes().toString().padStart(2, '0') + ':' + 
+                                  now.getSeconds().toString().padStart(2, '0') + '.' + 
+                                  Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+                
+                const logEl = document.createElement('div');
+                logEl.className = 'log';
+                logEl.innerHTML = `<span class="timestamp">[${timestamp}]</span> <span class="level-${log.level.toLowerCase()}">[${log.level}]</span> <span class="node">[${log.node.padEnd(15)}]</span> <span class="message">${log.message}</span>`;
+                terminal.appendChild(logEl);
+                
+                // Trigger animation
+                setTimeout(() => logEl.classList.add('visible'), 10);
+                
+                terminal.scrollTop = terminal.scrollHeight;
+
+                if (index === logs.length - 1) {
+                    const footer = document.createElement('div');
+                    footer.className = 'log visible';
+                    footer.style.marginTop = '20px';
+                    footer.innerHTML = `==================================================<br>📊 SYSTEM STATE: SHARED MEMORY DATA LAKE<br>==================================================<br>↳ TXN-881 | TYPE: RBIM_SYNC | LATENCY: 1.12s | NODE: RBIM-Service<br>↳ TXN-882 | TYPE: GANAP_TABULATION | LATENCY: 0.85s | NODE: GANAP-Service<br>↳ TXN-883 | TYPE: DISASTER_ALERT | LATENCY: 1.45s | NODE: DisasterAPI<br>...<br>==================================================`;
+                    terminal.appendChild(footer);
+                }
+            }, index * 400);
+        }
+
+        logs.forEach((log, i) => addLog(log, i));
+    </script>
+</body>
+</html>
