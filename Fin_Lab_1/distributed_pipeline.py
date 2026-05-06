@@ -1,4 +1,6 @@
 from mpi4py import MPI
+import time
+import random
 import json
 from datetime import datetime
 
@@ -37,7 +39,22 @@ def main():
         for i in range(1, size):
             comm.send(None, dest=i, tag=100)
     else:
-        pass
+        services = {1: "RBIM-Service", 2: "GANAP-Service", 3: "DisasterAPI"}
+        node_name = services.get(rank, f"Service-{rank}")
+
+        while True:
+            raw_packet = comm.recv(source=0, tag=100)
+            if raw_packet is None:
+                server_log("INFO", node_name, "Received termination signal. Spinning down.")
+                break 
+
+            task = json.loads(raw_packet)
+            server_log("INFO", node_name, f"Ingesting {task['type']} ({task['trace_id']})")
+            
+            db_latency = random.uniform(0.3, 1.8)
+            time.sleep(db_latency)
+            
+            server_log("SUCCESS", node_name, f"Processed {task['trace_id']} in {db_latency:.2f}s")
 
 if __name__ == "__main__":
     main()
