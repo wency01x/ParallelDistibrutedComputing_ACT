@@ -1,4 +1,6 @@
 from mpi4py import MPI
+import time
+import random
 
 def main():
     comm = MPI.COMM_WORLD
@@ -20,13 +22,23 @@ def main():
         for i, order in enumerate(orders):
             target = (i % active_workers) + 1
             comm.send(order, dest=target, tag=11)
-            print(f"Master: Assigned {order['id']} to Worker {target}")
             
         for i in range(1, size):
             comm.send(None, dest=i, tag=11)
             
     else:
-        pass # Workers will be implemented next
+        while True:
+            order = comm.recv(source=0, tag=11)
+            if order is None:
+                break
+                
+            print(f"Worker {rank}: Received {order['id']} ({order['item']})")
+            
+            # Simulate real-world processing delay
+            delay = random.uniform(0.5, 2.0)
+            time.sleep(delay)
+            
+            print(f"Worker {rank}: Finished {order['id']} in {delay:.2f}s")
 
 if __name__ == "__main__":
     main()
